@@ -1,13 +1,13 @@
 import React from 'react';
 
-class Third extends React.Component {
+class Forth extends React.Component {
   render() {
     return (
       <div>
-        THIRD
+        FORTH
       </div>
     )
   }
 }
 
-export default Third;
+export default Forth;

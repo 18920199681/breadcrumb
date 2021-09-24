@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { Link } from "react-router-dom";
 import Second from './second';
 import Third from './third';
+import Forth from './forth';
 
 import Breadcrumb from '../../components/breadcrumb';
 
@@ -13,18 +14,12 @@ class Home extends React.Component {
     prefixCls: 'home-container',
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isGray: false
-    }
-  }
-
   renderTabs(prefixCls) {
     return (
       <div className={`${prefixCls}-tabs`}>
         <Link to='/home/second'>second</Link>
         <Link to='/home/second/third'>third</Link>
+        <Link to='/home/second/third/forth'>forth</Link>
       </div>
     )
   }
@@ -68,6 +63,7 @@ class Home extends React.Component {
         {(pathname === '/' || pathname === '/home') && <div> HOME </div>}
         {pathname === '/home/second' && <Second />}
         {pathname === '/home/second/third' && <Third />}
+        {pathname === '/home/second/third/forth' && <Forth />}
       </div>
     );
   }
@@ -76,7 +72,7 @@ class Home extends React.Component {
     const { prefixCls, history, TestStore } = this.props;
     const { size } = TestStore.breadcrumb;
 
-    const braamcreumbList = [
+    const breadcrumbList = [
       {
         name: '首页',
         path: '/'
@@ -89,13 +85,17 @@ class Home extends React.Component {
         name: '三级目录',
         path: '/home/second/third'
       },
+      {
+        name: '四级目录',
+        path: '/home/second/third/forth'
+      },
     ];
 
     const renderOpts = {
-      braamcreumbList, // 列表
+      breadcrumbList, // 列表
       separator: '>', // 自定义分隔符
       size, // 尺寸
-      maxLength: 2,
+      maxLength: 3,
       history,
     }
 

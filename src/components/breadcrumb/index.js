@@ -7,13 +7,13 @@ class Breadcrumb extends React.Component {
   }
 
   renderBraedcremb() {
-    const { braamcreumbList, separator, prefixCls, history, size, maxLength } = this.props;
+    const { breadcrumbList, separator, prefixCls, history, size, maxLength } = this.props;
     const { pathname } = history.location;
 
     const sepa = separator || '/';
 
     const onClick = (item, index) => {
-      if (index === braamcreumbList.length - 1) return;
+      if (index === breadcrumbList.length - 1) return;
       history.push(item.path);
     }
 
@@ -29,7 +29,7 @@ class Breadcrumb extends React.Component {
     return (
       <div className={CNS}>
         {
-          braamcreumbList.map((item, index) => {
+          breadcrumbList.map((item, index) => {
             if (item.path === pathname) lastIndex = index;
 
             if (lastIndex !== -1 && index > lastIndex) return false;
@@ -41,10 +41,27 @@ class Breadcrumb extends React.Component {
 
             return (
               <span key={String(index)} className={`${prefixCls}-items`}>
-                <span {...renderNameOpts}>{item.name}</span>
-                <span className={`${prefixCls}-items-separator`}>
-                  {index > lastIndex && sepa}
-                </span>
+                {
+                  (index < maxLength-1 || index === lastIndex)
+                  && <span {...renderNameOpts}>{item.name}</span>
+                }
+
+                {
+                  index === maxLength-1
+                  && index !== lastIndex
+                  && <span className={`${prefixCls}-items-ellipsis`} onClick={() => onClick(item, index)}>...</span>
+                }
+
+                {
+                  index <= maxLength-1
+                  && maxLength-1 !== lastIndex
+                  && index !== lastIndex
+                  && (
+                    <span className={`${prefixCls}-items-separator`}>
+                      {sepa}
+                    </span>
+                  )
+                }
               </span>
             );
           })
